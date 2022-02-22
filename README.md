@@ -5,7 +5,7 @@
 
 Early stage lanelet2 maps from Győr and ZalaZone, created by Krisztián Enisz and Mátyás Mesics.
 
-ZalaZone Maps origin in UTM coords: `[639770.000, 5195040.000, 0.000]` based on [map_zala_0](https://github.com/szenergy/szenergy-public-resources/wiki/H-TF) ROS tf frame [`33T` zone]
+ZalaZone Maps origin in UTM coords: `[639770.000, 5195040.000, 0.000]` based on [map_zala_0](https://github.com/szenergy/szenergy-public-resources/wiki/H-TF) ROS tf frame [`33T` zone] ([There are several online UTM-WGS84 converters](https://coordinates-converter.com/en/decimal/46.894188434576925,16.8348613471017251?karte=OpenStreetMap&zoom=14))
 
 GyorUni Maps origin in UTM coords: `[697237.000, 5285644.000, 0.000]` based on [map_gyor_0](https://github.com/szenergy/szenergy-public-resources/wiki/H-TF) ROS tf frame [`33T` zone]
 
@@ -20,6 +20,36 @@ GyorUni Maps origin in UTM coords: `[697237.000, 5285644.000, 0.000]` based on [
 ## Győr campus
 <img src="GyorUni/GyorUni_20210421_11b_early.png" width=440/>
 
+
+# Usage without ROS
+
+There are numerous solutions for  UTM-WGS84 conversion in [python](https://github.com/Turbo87/utm), in [c++](https://github.com/szenergy/duro_gps_driver/blob/master/src/utm.cpp) or in [MATLAB](https://www.mathworks.com/matlabcentral/fileexchange/14804-wgs2utm-version-2). 
+
+## Python
+
+```
+pip install utm
+```
+
+UTM-WGS84 conversion
+``` python
+import utm
+utm.to_latlon(639770.000, 5195040.000, 33, 'T')
+```
+Result
+``` cs
+(46.894188434576925, 16.834861347101725)
+```
+
+WGS84-UTM conversion
+``` python
+import utm
+utm.from_latlon(47.69405596312653, 17.62866888484998)
+```
+Result
+```cs
+(697237.0000192814, 5285644.004006204, 33, 'T')
+```
 
 # Usage with ROS
 
@@ -38,7 +68,7 @@ roslaunch map_file lanelet2_map_loader_zala.launch
 ```
 Other handy commands
 
-```
+``` cs
 rosrun tf static_transform_publisher 429.0 -1455.0 0.0 0.0 0.0 0.0 map_zala_0 map_zala_1 50 
 rosrun tf static_transform_publisher 200.0 68.0 0.0 0.0 0.0 0.0 map_zala_0 map_zala_2 50  
 rosrun tf static_transform_publisher -40.0 -40.0 0.0 0.0 0.0 0.0 map_gyor_0 map_gyor_1 50  
