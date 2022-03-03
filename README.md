@@ -23,6 +23,11 @@ GyorUni Maps origin in UTM coords: `[697237.000, 5285644.000, 0.000]` based on [
 
 # Usage without ROS
 
+- [Tier4 Tool](https://tools.tier4.jp/) - Vector Map Builder is a tool that helps to create a vector map from point cloud data.
+- [Assure mapping tools](https://github.com/hatem-darweesh/assuremappingtools) - Desktop based tool for viewing, editing and saving road network maps for autonomous vehicle platforms such as Autoware.
+- [MapToolbox](https://github.com/autocore-ai/MapToolbox) - Plugins to make Lanelet2/vector_map in Unity
+- [JOSM](https://josm.openstreetmap.de/) - Java OpenStreetMap Editor
+
 There are numerous solutions for  UTM-WGS84 conversion in [python](https://github.com/Turbo87/utm), in [c++](https://github.com/szenergy/duro_gps_driver/blob/master/src/utm.cpp) or in [MATLAB](https://www.mathworks.com/matlabcentral/fileexchange/14804-wgs2utm-version-2). 
 
 ## Python
@@ -73,3 +78,5 @@ rosrun tf static_transform_publisher 429.0 -1455.0 0.0 0.0 0.0 0.0 map_zala_0 ma
 rosrun tf static_transform_publisher 200.0 68.0 0.0 0.0 0.0 0.0 map_zala_0 map_zala_2 50  
 rosrun tf static_transform_publisher -40.0 -40.0 0.0 0.0 0.0 0.0 map_gyor_0 map_gyor_1 50  
 ```
+Alternative:
+- [lanelet_rviz_plugin_ros](https://github.com/coincar-sim/lanelet_rviz_plugin_ros) - Rviz Plugin for displaying a lanelet2 map.
