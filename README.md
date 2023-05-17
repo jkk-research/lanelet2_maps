@@ -80,3 +80,10 @@ rosrun tf static_transform_publisher -40.0 -40.0 0.0 0.0 0.0 0.0 map_gyor_0 map_
 ```
 Alternative:
 - [lanelet_rviz_plugin_ros](https://github.com/coincar-sim/lanelet_rviz_plugin_ros) - Rviz Plugin for displaying a lanelet2 map.
+
+
+# Usage with ROS 2
+
+[A simple publisher from](https://github.com/jkk-research/gui_lexus/blob/main/gui_lexus/pub_lane_markers.py) a [yaml file](https://github.com/jkk-research/gui_lexus/blob/main/resource/zalazone_uni_track_marker.yaml).
+Alternative:
+- [Autoware Universe](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-interfaces/components/map/#lanelet2-map)
