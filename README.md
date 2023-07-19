@@ -86,4 +86,4 @@ Alternative:
 
 [A simple publisher from](https://github.com/jkk-research/gui_lexus/blob/main/gui_lexus/pub_lane_markers.py) a [yaml file](https://github.com/jkk-research/gui_lexus/blob/main/resource/zalazone_uni_track_marker.yaml).
 Alternative:
-- [Autoware Universe](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-interfaces/components/map/#lanelet2-map)
+- [Autoware Universe](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-interfaces/components/map/#lanelet2-map) - [`map_loader` package](https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader)
