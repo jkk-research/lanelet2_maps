@@ -84,6 +84,7 @@ Alternative:
 
 # Usage with ROS 2
 
-[A simple publisher from](https://github.com/jkk-research/gui_lexus/blob/main/gui_lexus/pub_lane_markers.py) a [yaml file](https://github.com/jkk-research/gui_lexus/blob/main/resource/zalazone_uni_track_marker.yaml).
-Alternative:
+- [`lanelet2_rviz2` ROS2 package](https://raw.githubusercontent.com/jkk-research/lanelet2_rviz2/refs/heads/master/etc/lanelet_visu01.png) - `lanelet2_rviz2` loads the Lanelet2 `.osm` files and displays it as a `visualization_msgs/MarkerArray`. Minimum dependency package.
 - [Autoware Universe](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-interfaces/components/map/#lanelet2-map) - [`map_loader` package](https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader)
+![](https://raw.githubusercontent.com/jkk-research/lanelet2_rviz2/refs/heads/master/etc/lanelet_visu01.png)
+
