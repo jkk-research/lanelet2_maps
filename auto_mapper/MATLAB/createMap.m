@@ -1,14 +1,14 @@
 clear; close all;clc;
 
 %% step 1: read in new files, put them into raw lanes struct
-matFiles = dir(fullfile("forMapping", "*.mat"));
+matFiles = dir(fullfile("..", " "*.mat"));
 for i=1:length(matFiles)
     data = load(fullfile(matFiles(i).folder, matFiles(i).name));
     rawLanes(i) = dataPreprocess(data);    
 end
 
 %% step 2: read reference files
-refMatFile = dir(fullfile("forMapping", "references", "manRef.mat"));
+refMatFile = dir(fullfile("..", "CRP_MAP_DB", "crp_map_db.mat"));
 load(fullfile(refMatFile.folder, refMatFile.name));
 
 %% step 3: match the raw measurement files to the reference data
