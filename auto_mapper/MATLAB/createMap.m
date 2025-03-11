@@ -1,10 +1,13 @@
 clear; close all;clc;
 
+addpath("library");
+
 %% step 1: read in new files, put them into raw lanes struct
-matFiles = dir(fullfile("..", " "*.mat"));
+matFiles = dir(fullfile("..", "MapMeasurements", "*.mat"));
+options.fillHoles = false;
 for i=1:length(matFiles)
     data = load(fullfile(matFiles(i).folder, matFiles(i).name));
-    rawLanes(i) = dataPreprocess(data);    
+    rawLanes(i) = dataPreprocess(data, options);    
 end
 
 %% step 2: read reference files
@@ -15,38 +18,56 @@ load(fullfile(refMatFile.folder, refMatFile.name));
 for rawLaneId=1:length(rawLanes)
     for roadId=1:size(referenceData,1)
         for laneId=1:size(referenceData,2)
-            for snippetId=1:size(referenceData{roadId,laneId}{1,3},2)
-                if (any(inpolygon(rawLanes(rawLaneId).path(:,1), ...
-                        rawLanes(rawLaneId).path(:,2), ...
-                        referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,1), ...
-                        referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,2))))
-                    
-                    % centerline
-                    referenceData{roadId,laneId}{1,3}{1,snippetId}.path = ...
-                        [referenceData{roadId,laneId}{1,3}{1,snippetId}.path; ...
-                        rawLanes(rawLaneId).path(...
-                        inpolygon(rawLanes(rawLaneId).path(:,1), ...
-                        rawLanes(rawLaneId).path(:,2), ...
-                        referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,1), ...
-                        referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,2)), :)];
-                    
-                    % left lane edge
-                    referenceData{roadId,laneId}{1,1}{1,snippetId}.path = ...
-                        [referenceData{roadId,laneId}{1,1}{1,snippetId}.path; ...
-                        rawLanes(rawLaneId).leftLane(...
-                        inpolygon(rawLanes(rawLaneId).leftLane(:,1), ...
-                        rawLanes(rawLaneId).leftLane(:,2), ...
-                        referenceData{roadId,laneId}{1,1}{1,snippetId}.boundingBox(:,1), ...
-                        referenceData{roadId,laneId}{1,1}{1,snippetId}.boundingBox(:,2)), :)];
-                    
-                    % right lane edge
-                    referenceData{roadId,laneId}{1,2}{1,snippetId}.path = ...
-                        [referenceData{roadId,laneId}{1,2}{1,snippetId}.path; ...
-                        rawLanes(rawLaneId).rightLane(...
-                        inpolygon(rawLanes(rawLaneId).rightLane(:,1), ...
-                        rawLanes(rawLaneId).rightLane(:,2), ...
-                        referenceData{roadId,laneId}{1,2}{1,snippetId}.boundingBox(:,1), ...
-                        referenceData{roadId,laneId}{1,2}{1,snippetId}.boundingBox(:,2)), :)];
+            if (~isempty(referenceData{roadId, laneId}))
+                for snippetId=1:size(referenceData{roadId,laneId}{3},2)
+                    if (any(inpolygon(rawLanes(rawLaneId).path(:,1), ...
+                            rawLanes(rawLaneId).path(:,2), ...
+                            referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,1), ...
+                            referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,2))))
+                        
+                        % centerline
+                        referenceData{roadId,laneId}{1,3}{1,snippetId}.path = ...
+                            [referenceData{roadId,laneId}{1,3}{1,snippetId}.path; ...
+                            rawLanes(rawLaneId).path(...
+                            inpolygon(rawLanes(rawLaneId).path(:,1), ...
+                            rawLanes(rawLaneId).path(:,2), ...
+                            referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,1), ...
+                            referenceData{roadId,laneId}{1,3}{1,snippetId}.boundingBox(:,2)), :)];
+                    end
+                end
+
+                for snippetId=1:size(referenceData{roadId,laneId}{1},2)
+                    if (any(inpolygon(rawLanes(rawLaneId).leftLane(:,1), ...
+                            rawLanes(rawLaneId).leftLane(:,2), ...
+                            referenceData{roadId,laneId}{1,1}{1,snippetId}.boundingBox(:,1), ...
+                            referenceData{roadId,laneId}{1,1}{1,snippetId}.boundingBox(:,2))))
+                        
+                        % left lane edge
+                        referenceData{roadId,laneId}{1,1}{1,snippetId}.path = ...
+                            [referenceData{roadId,laneId}{1,1}{1,snippetId}.path; ...
+                            rawLanes(rawLaneId).leftLane(...
+                            inpolygon(rawLanes(rawLaneId).leftLane(:,1), ...
+                            rawLanes(rawLaneId).leftLane(:,2), ...
+                            referenceData{roadId,laneId}{1,1}{1,snippetId}.boundingBox(:,1), ...
+                            referenceData{roadId,laneId}{1,1}{1,snippetId}.boundingBox(:,2)), :)];
+                    end
+                end
+
+                for snippetId=1:size(referenceData{roadId,laneId}{1, 2},2)
+                    if (any(inpolygon(rawLanes(rawLaneId).rightLane(:,1), ...
+                            rawLanes(rawLaneId).rightLane(:,2), ...
+                            referenceData{roadId,laneId}{1,2}{1,snippetId}.boundingBox(:,1), ...
+                            referenceData{roadId,laneId}{1,2}{1,snippetId}.boundingBox(:,2))))
+                        
+                        % right lane edge
+                        referenceData{roadId,laneId}{1,2}{1,snippetId}.path = ...
+                            [referenceData{roadId,laneId}{1,2}{1,snippetId}.path; ...
+                            rawLanes(rawLaneId).rightLane(...
+                            inpolygon(rawLanes(rawLaneId).rightLane(:,1), ...
+                            rawLanes(rawLaneId).rightLane(:,2), ...
+                            referenceData{roadId,laneId}{1,2}{1,snippetId}.boundingBox(:,1), ...
+                            referenceData{roadId,laneId}{1,2}{1,snippetId}.boundingBox(:,2)), :)];
+                    end
                 end
             end
         end
@@ -56,8 +77,10 @@ end
 %% step 4: accurate final path calculation
 for roadId=1:size(referenceData,1)
     for laneId=1:size(referenceData,2)
-        for laneEdgeId=1:size(referenceData{roadId, laneId}, 2)
-            referenceData{roadId,laneId}{1,laneEdgeId} = calculateSmoothLine(referenceData{roadId,laneId}{1,laneEdgeId});
+        if(~isempty(referenceData{roadId, laneId}))
+            for laneEdgeId=1:size(referenceData{roadId, laneId}, 2)
+                referenceData{roadId,laneId}{1,laneEdgeId} = calculateSmoothLine(referenceData{roadId,laneId}{1,laneEdgeId});
+            end
         end
     end
 end
@@ -72,22 +95,35 @@ set(f, 'defaultLegendInterpreter','latex');
 for roadId=1:size(referenceData,1)
     for laneId=1:size(referenceData,2)
         for laneEdgeId=1:size(referenceData{roadId, laneId}, 2)
+            referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path = [];
+            referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath = [];
             for snippetId=1:length(referenceData{roadId, laneId}{1,laneEdgeId})
-                
-                plot(referenceData{roadId, laneId}{1,laneEdgeId}{snippetId}.path(:,1), ...
-                    referenceData{roadId, laneId}{1,laneEdgeId}{snippetId}.path(:,2), ...
-                    'color', 'r', 'Marker', '.', 'LineStyle', 'none', ...
-                    'DisplayName',strcat("laneId=",num2str(laneId)));
-                
-                    hold on; grid on;
-                    axis equal;
-                    
-                plot(referenceData{roadId, laneId}{1,laneEdgeId}{snippetId}.finalPath(:,1), ...
-                    referenceData{roadId, laneId}{1,laneEdgeId}{snippetId}.finalPath(:,2), ...
-                    'color', 'k', 'LineWidth', 1, ...
-                    'DisplayName', strcat("laneId=", num2str(laneId), "snippetId=", num2str(snippetId)));
-
+                referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path = [
+                    referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path;
+                    referenceData{roadId, laneId}{1,laneEdgeId}{snippetId}.path];
+                referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath = [
+                    referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath;
+                    referenceData{roadId, laneId}{1,laneEdgeId}{snippetId}.finalPath];
             end
+        end
+    end
+end
+
+for roadId=1:size(referenceDataToPlot,1)
+    for laneId=1:size(referenceDataToPlot,2)
+        for laneEdgeId=1:size(referenceDataToPlot{roadId, laneId}, 2)
+            plot(referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path(:,1), ...
+                referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path(:,2), ...
+                'color', 'r', 'Marker', '.', 'LineStyle', 'none', ...
+                'DisplayName',strcat("laneId=",num2str(laneId)));
+            
+                hold on; grid on;
+                axis equal;
+                
+            plot(referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath(:,1), ...
+                referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath(:,2), ...
+                'color', 'k', 'LineWidth', 1, ...
+                'DisplayName', strcat("laneId=", num2str(laneId)));
         end
     end
 end
@@ -123,89 +159,47 @@ function snippets = calculateSmoothLine(snippets)
                 localPath = (snippets{n}.path-snippets{n-1}.finalPath(end,1:2))*T';
             end
             % regression
-            if (snippets{n}.type == 0)
-                % linear regression
-                if (n==1)
-                    xFine = min(localPath(:,1)):0.1:max(localPath(:,1));
-                    c = polyfit(localPath(:,1), localPath(:,2), 1);
-                    snippets{n}.finalPath = [xFine' c(2)+c(1)*xFine']*T+[snippets{n}.path(1,1) snippets{n}.path(1,2)];
-                else                    
-                    x0 = 0;
-                    y0 = 0;
-                    xFine = 0:0.1:max(localPath(:,1));
-                    clear V;
-                    % 'C' is the Vandermonde matrix for 'x'
-                    m = 3; % Degree of polynomial to fit
-                    V(:,m+1) = ones(size(localPath,1),1,class(localPath));
-                    for j = m:-1:1
-                       V(:,j) = localPath(:,1).*V(:,j+1);
-                    end
-                    C = V;
-                    % 'd' is the vector of target values, 'y'.
-                    d = localPath(:,2);
-                    %%
-                    % There are no inequality constraints in this case, i.e.,
-                    A = [];
-                    b = [];
-                    %%
-                    % We use linear equality constraints to force the curve to hit the required point. In
-                    % this case, 'Aeq' is the Vandermoonde matrix for 'x0'
-                    Aeq = x0.^(m:-1:0);
-                    % and 'beq' is the value the curve should take at that point
-                    beq = y0;
-                    %%
-                    p = lsqlin( C, d, A, b, Aeq, beq );
-                    %%
-                    % We can then use POLYVAL to evaluate the fitted curve
-                    yhat = polyval( p, xFine );
-                    if (n==1)
-                        snippets{n}.finalPath = [xFine' yhat']*T+[snippets{n}.path(1,1) snippets{n}.path(1,2)];
-                    else
-                        snippets{n}.finalPath = [xFine' yhat']*T+[snippets{n-1}.finalPath(end,1) snippets{n-1}.finalPath(end,2)];
-                    end
-                end
+            if (n==1)
+                xFine = min(localPath(:,1)):0.1:max(localPath(:,1));
+                c = polyfit(localPath(:,1), localPath(:,2), 3);
+                snippets{n}.finalPath = [xFine' c(4)+c(3)*xFine'+c(2)*xFine'.^2+c(1)*xFine'.^3]*T+[snippets{n}.path(1,1) snippets{n}.path(1,2)];
             else
+                x0 = 0;
+                y0 = 0;
+                xFine = min(localPath(:,1)):0.1:max(localPath(:,1));
+                clear V;
+                % 'C' is the Vandermonde matrix for 'x'
+                m = 5; % Degree of polynomial to fit
+                V(:,m+1) = ones(size(localPath,1),1,class(localPath));
+                for j = m:-1:1
+                   V(:,j) = localPath(:,1).*V(:,j+1);
+                end
+                C = V;
+                % 'd' is the vector of target values, 'y'.
+                d = localPath(:,2);
+                %%
+                % There are no inequality constraints in this case, i.e.,
+                A = [];
+                b = [];
+                %%
+                % We use linear equality constraints to force the curve to hit the required point. In
+                % this case, 'Aeq' is the Vandermoonde matrix for 'x0'
+                Aeq = x0.^(m:-1:0);
+                % and 'beq' is the value the curve should take at that point
+                beq = y0;
+                %%
+                p = lsqlin( C, d, A, b, Aeq, beq );
+                %%
+                % We can then use POLYVAL to evaluate the fitted curve
+                yhat = polyval( p, xFine );
                 if (n==1)
-                    c = polyfit(localPath(:,1), localPath(:,2), 3);
-                    snippets{n}.finalPath = [xFine' c(4)+c(3)*xFine'+c(2)*xFine'.^2+c(1)*xFine'.^3]*T+[snippets{n}.path(1,1) snippets{n}.path(1,2)];
+                    snippets{n}.finalPath = [xFine' yhat']*T+[snippets{n}.path(1,1) snippets{n}.path(1,2)];
                 else
-                    x0 = 0;
-                    y0 = 0;
-                    xFine = 0:0.1:max(localPath(:,1));
-                    clear V;
-                    % 'C' is the Vandermonde matrix for 'x'
-                    m = 17; % Degree of polynomial to fit
-                    V(:,m+1) = ones(size(localPath,1),1,class(localPath));
-                    for j = m:-1:1
-                       V(:,j) = localPath(:,1).*V(:,j+1);
-                    end
-                    C = V;
-                    % 'd' is the vector of target values, 'y'.
-                    d = localPath(:,2);
-                    %%
-                    % There are no inequality constraints in this case, i.e.,
-                    A = [];
-                    b = [];
-                    %%
-                    % We use linear equality constraints to force the curve to hit the required point. In
-                    % this case, 'Aeq' is the Vandermoonde matrix for 'x0'
-                    Aeq = x0.^(m:-1:0);
-                    % and 'beq' is the value the curve should take at that point
-                    beq = y0;
-                    %%
-                    p = lsqlin( C, d, A, b, Aeq, beq );
-                    %%
-                    % We can then use POLYVAL to evaluate the fitted curve
-                    yhat = polyval( p, xFine );
-                    if (n==1)
-                        snippets{n}.finalPath = [xFine' yhat']*T+[snippets{n}.path(1,1) snippets{n}.path(1,2)];
-                    else
-                        snippets{n}.finalPath = [xFine' yhat']*T+[snippets{n-1}.finalPath(end,1) snippets{n-1}.finalPath(end,2)];
-                    end
+                    snippets{n}.finalPath = [xFine' yhat']*T+[snippets{n-1}.finalPath(end,1) snippets{n-1}.finalPath(end,2)];
                 end
             end
         else
-            snippets{n}.finalPath = [];
+            snippets{n}.finalPath = snippets{n}.path;
         end
     end    
 end
