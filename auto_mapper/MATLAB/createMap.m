@@ -3,7 +3,7 @@ clear; close all;clc;
 addpath("library");
 
 %% step 1: read in new files, put them into raw lanes struct
-matFiles = dir(fullfile("..", "MapMeasurements", "*.mat"));
+matFiles = dir(fullfile("C:\database\GTC_Map\MapMeasurements", "*.mat"));
 options.fillHoles = false;
 for i=1:length(matFiles)
     data = load(fullfile(matFiles(i).folder, matFiles(i).name));
@@ -11,7 +11,7 @@ for i=1:length(matFiles)
 end
 
 %% step 2: read reference files
-refMatFile = dir(fullfile("..", "CRP_MAP_DB", "crp_map_db.mat"));
+refMatFile = dir(fullfile("C:\database\GTC_Map\CRP_MAP_DB", "crp_map_db.mat"));
 load(fullfile(refMatFile.folder, refMatFile.name));
 
 %% step 3: match the raw measurement files to the reference data
@@ -114,16 +114,16 @@ for roadId=1:size(referenceDataToPlot,1)
         for laneEdgeId=1:size(referenceDataToPlot{roadId, laneId}, 2)
             plot(referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path(:,1), ...
                 referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.path(:,2), ...
-                'color', 'r', 'Marker', '.', 'LineStyle', 'none', ...
-                'DisplayName',strcat("laneId=",num2str(laneId)));
+                'color', [255, 178, 102]/255, 'Marker', '.', 'LineStyle', 'none', ...
+                'HandleVisibility','off');
             
                 hold on; grid on;
                 axis equal;
                 
             plot(referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath(:,1), ...
                 referenceDataToPlot{roadId, laneId}{1,laneEdgeId}.finalPath(:,2), ...
-                'color', 'k', 'LineWidth', 1, ...
-                'DisplayName', strcat("laneId=", num2str(laneId)));
+                'kx', 'MarkerSize', 2, ...
+                'DisplayName', strcat("rId=", num2str(roadId), " lId=", num2str(laneId), " leId=", num2str(laneEdgeId)));
         end
     end
 end
@@ -132,7 +132,7 @@ xlabel("$X_{UTM}(m)$"); ylabel("$Y_{UTM}(m)$");
 set(gca,'TickLabelInterpreter','latex');
 set(gca,'FontSize', 14);
 legend ("Location", "best", "FontSize", 11);
-title("Lane map for ZalaZONE highway, east segment");
+title("Merged Lane Maps");
 
 %% END OF ORIGINAL FUNCTION
 %% START OF SUBFUNCTIONS

@@ -1,5 +1,5 @@
 function lanes = dataPreprocess(data, options)
-    [x,y,~] = deg2utm(data.ADMA_INS_Lat_Abs_POI1,data.ADMA_INS_Long_Abs_POI1);
+    [x,y,utm_zone] = deg2utm(data.ADMA_INS_Lat_Abs_POI1,data.ADMA_INS_Long_Abs_POI1);
 
     % redundant point filter
     f = (abs(diff(x))>0) & (data.ADMA_Status_GNSS_Mode(1:end-1)'==8);

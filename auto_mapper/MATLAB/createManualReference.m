@@ -7,7 +7,7 @@ addpath("library");
 
 options.fillHoles = false;
 
-crpMapDatabasePath = fullfile("..", "CRP_MAP_DB");
+crpMapDatabasePath = fullfile("C:\database\GTC_Map\CRP_MAP_DB");
 
 if (isfolder(crpMapDatabasePath))
     crpMapDatabaseFile = dir(fullfile(crpMapDatabasePath, "crp_map_db.mat"));
@@ -21,7 +21,7 @@ if (isfolder(crpMapDatabasePath))
     end
 end
 
-matFilesForRef = dir(fullfile("..","ReferenceMeasurements", "*.mat"));
+matFilesForRef = dir(fullfile("C:\database\GTC_Map\ReferenceMeasurements", "*.mat"));
 
 for i=1:length(matFilesForRef)
     data = load(fullfile(matFilesForRef(i).folder, matFilesForRef(i).name));
@@ -73,8 +73,8 @@ for roadId = 1:size(refLanes,1)
     end    
 end
 
-if(~isfolder(fullfile("..", "CRP_MAP_DB")))
-    mkdir(fullfile("..", "CRP_MAP_DB"));
+if(~isfolder(fullfile("C:\database\GTC_Map\CRP_MAP_DB")))
+    mkdir(fullfile("C:\database\GTC_Map\CRP_MAP_DB"));
 end
 
 save(fullfile(crpMapDatabasePath, "crp_map_db.mat"), "referenceData");
