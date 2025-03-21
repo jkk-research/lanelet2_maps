@@ -46906,6 +46906,16 @@
     <tag k="local_y" v="-1071.0072"/>
     <tag k="ele" v="-3.0169"/>
   </node>
+  <node id="15" lat="0.0" lon="0.0">
+    <tag k="local_x" v="886.1914"/>
+    <tag k="local_y" v="-1197.4733"/>
+    <tag k="ele" v="0"/>
+  </node>
+  <node id="16" lat="0.0" lon="0.0">
+    <tag k="local_x" v="886.7314"/>
+    <tag k="local_y" v="-1197.5075"/>
+    <tag k="ele" v="0"/>
+  </node>
   <way id="-859">
     <nd ref="-25355"/>
     <nd ref="-25356"/>
@@ -56333,6 +56343,12 @@
     <nd ref="-37418"/>
     <nd ref="-25784"/>
   </way>
+  <way id="17">
+    <nd ref="15" />
+    <nd ref="16" />
+    <tag k="subtype" v="stop_sign" />
+    <tag k="type" v="traffic_sign" />
+  </way>
   <way id="3">
     <nd ref="1"/>
     <nd ref="2"/>
@@ -56438,8 +56454,9 @@
     <tag k="one_way" v="no"/>
   </relation>
   <relation id="7">
+    <member type="way" role="refers" ref="17" />
     <member type="way" role="ref_line" ref="3"/>
-    <tag k="type" v="regulatory_element"/>
     <tag k="subtype" v="traffic_sign"/>
+    <tag k="type" v="regulatory_element"/>
   </relation>
 </osm>
