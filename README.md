@@ -3,7 +3,7 @@
 
 <img src="Others/Logo_SZE_JKK_ZalaZone.svg" width=600/>
 
-Lanelet2 maps from Győr and ZalaZone, created by Krisztián Enisz, Kéter Kőrös and Mátyás Mesics.
+Lanelet2 maps from Győr and ZalaZone, created by Krisztián Enisz, Péter Kőrös and Mátyás Mesics.
 
 ZalaZone Maps origin in UTM coords: `[639770.000, 5195040.000, 0.000]` based on [map_zala_0](https://github.com/szenergy/szenergy-public-resources/wiki/H-TF) ROS tf frame [`33T` zone] ([There are several online UTM-WGS84 converters](https://coordinates-converter.com/en/decimal/46.894188434576925,16.8348613471017251?karte=OpenStreetMap&zoom=14))
 
