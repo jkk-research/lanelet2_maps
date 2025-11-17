@@ -15,7 +15,7 @@ GyorUni Maps origin in UTM coords: `[697237.000, 5285644.000, 0.000]` based on [
 
 ## ZalaZone SmartCity track
 <img src="ZalaZone/ZalaZone_SmartCityZone.png" width=440/>
-
+<img src="ZalaZone/ZalaZone_SmartCityZone_lanelet2_map_2025_05_21_visu01.png" width=440/>
 
 ## Győr campus
 <img src="GyorUni/GyorUni.png" width=440/>
