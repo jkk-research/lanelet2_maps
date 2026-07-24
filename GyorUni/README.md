@@ -18,4 +18,14 @@ First version.
 
 # Győr University Campus pointcloud
 
+Transforming **2026.01.16.** verison with +0.97m, -0.33m, +0.33° (0.0057595865rad):
+
+```c
+pcl_transform_point_cloud \
+  /home/dev/autoware_map/gyor_campus/pointcloud_map_orig.pcd \
+  /home/dev/autoware_map/gyor_campus/pointcloud_map.pcd \
+  -trans 0.970,-0.330,0 \
+  -axisangle 0,0,1,0.0057595865
+```
+
 TODO
