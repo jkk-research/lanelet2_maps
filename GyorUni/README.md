@@ -4,7 +4,7 @@
 
 ## Versions
 
-### 2026.07.20. (latest)
+### 2026-07-20 (latest)
 
 Transformed `2026.01.16.` with:
 - `t_x` : `+0.97`m 
@@ -12,13 +12,13 @@ Transformed `2026.01.16.` with:
 - `yaw` : `+0.33`°
 
 
-### 2026.01.16.
-First version.
+### 2026-01-16 
+First version. Version is defined by date, which is in ISO 8601 standard `YYYY-MM-DD`.
 
 
 # Győr University Campus pointcloud
 
-Transforming **2026.01.16.** verison with +0.97m, -0.33m, +0.33° (0.0057595865rad):
+Transforming **2026-01-16** verison with +0.97m, -0.33m, +0.33° (0.0057595865rad):
 
 ```c
 pcl_transform_point_cloud \
