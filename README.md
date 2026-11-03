@@ -10,6 +10,11 @@ ZalaZone Maps origin in UTM coords: `[639770.000, 5195040.000, 0.000]` based on 
 GyorUni Maps origin in UTM coords: `[697237.000, 5285644.000, 0.000]` based on [map_gyor_0](https://github.com/szenergy/szenergy-public-resources/wiki/H-TF) ROS tf frame [`33T` zone]
 
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21871328.svg)](https://doi.org/10.5281/zenodo.21871328)
+
+The OSM files are compatible PCD pointcloud files, which can be found in Zenodo: [zenodo.org/communities/jkk-research](https://zenodo.org/communities/jkk-research/) or at the research center dataset page: [jkk-research.github.io/latest/dataset](https://jkk-research.github.io/latest/dataset).
+
+
 ## ZalaZone University track
 <img src="ZalaZone/ZalaZone_Uni_track_full_early.gif" width=440/>
 
@@ -88,3 +93,31 @@ Alternative:
 - [Autoware Universe](https://autowarefoundation.github.io/autoware-documentation/main/design/autoware-interfaces/components/map/#lanelet2-map) - [`map_loader` package](https://github.com/autowarefoundation/autoware.universe/tree/main/map/map_loader)
 ![](https://raw.githubusercontent.com/jkk-research/lanelet2_rviz2/refs/heads/master/etc/lanelet_visu01.png)
 
+# Citation
+
+If you use this in your research, please cite the following way:
+
+```bibtex
+@dataset{jkk_dataset_04,
+  author       = {Horváth, Ernő and
+                  Krecht, Rudolf and
+                  Markó, Norbert and
+                  Igneczi, Gergo and
+                  Pusztai, Zoltán and
+                  Kőrös, Péter and
+                  Mesics, Mátyás and
+                  Enisz, Krisztian and
+                  Zahuczki, Zoltán and
+                  Unger, Miklós and
+                  Józsa, Dávid},
+  title        = {jkk\_dataset\_04 mapping | HD map - Győr, Campus
+                   2026-07-20
+                  },
+  month        = jul,
+  year         = 2026,
+  publisher    = {Zenodo},
+  version      = {2026-07-20},
+  doi          = {10.5281/zenodo.21871328},
+  url          = {https://doi.org/10.5281/zenodo.21871328},
+}
+```
